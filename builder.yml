@@ -1,0 +1,17 @@
+kind: pipeline
+name: Builder1
+
+steps:
+- name: BOB
+  image: archlinux:latest
+  environment:
+    TELEGRAM_TOKEN:
+      from_secret: TELEGRAM_TOKEN
+    GITHUB_TOKEN:
+      from_secret: GITHUB_TOKEN
+  commands:
+    - "export GITHUB_TOKEN"
+    - "export TELEGRAM_TOKEN"
+    - pacman -Sy base-devel bc llvm curl zip wget git --noconfirm
+    - wget https://raw.githubusercontent.com/theradcolor/lazyscripts/master/ci-scripts/builder
+    - bash builder build1
